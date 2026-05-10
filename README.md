@@ -11,10 +11,10 @@ Our best-performing model modifies YOLO11-S by targeting both channel and spatia
 * **Attention Gates (AG):** Inserted at Layers 13 and 17 on the P4 and P3 FPN skip connections. This stops irrelevant background spatial noise from bleeding into the detection neck.
 
 ## What We Tried (Ablation & Experiments)
-We did not just build one model. We ran a systematic ablation study to see what actually works for surveillance smoke detection. Here is a brief breakdown of our experimental process:
+We did not just build one model. We ran a systematic ablation(13 total) study to see what actually works for surveillance smoke detection. Here is a brief breakdown of our experimental process:
 
 1. **Trained the Baseline:** We started by training a vanilla YOLO11-S model on our unified dataset to establish a performance floor.
-2. **Attention & Placement Search:** We experimented with adding CBAM at various bottleneck and neck positions. We found that stacking CBAM in the neck actually degraded performance by suppressing subtle smoke gradients. This led us to test Attention Gates (AG) on the skip connections and DCT frequency filtering, which proved much more effective.
+2. **Attention & Placement Search:** We experimented with adding CBAM at various bottleneck and neck positions (after spff). We found that stacking CBAM in the neck actually degraded performance by suppressing subtle smoke gradients. This led us to test Attention Gates (AG) on the skip connections and DCT frequency filtering, which proved much more effective.
 3. **Threshold Sweeping & Spatial Filtering:** We swept confidence thresholds and tried a spatial "sky-zone" filter to reduce false positives. The spatial filter proved too costly, losing roughly 1.35 percentage points of recall for every 1 point of FP rate saved.
 4. **CLIP Post-Hoc Filtering:** We attempted to use CLIP (ViT-L/14) as a zero-shot filter to cull false positives. This failed entirely because CLIP struggles with the severe domain gap of heavily compressed, low-light surveillance crops.
 5. **Single-Class Training:** We tested a smoke-only hypothesis. It turned out that keeping the "fire" class during training actually improves smoke detection recall due to better boundary supervision.
