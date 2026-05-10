@@ -1,16 +1,16 @@
 # YOLO11-Smoke-Attention: Wildfire Detection via DCT & Attention Gating
 
-## 📌 Overview
+## Overview
 Fixed tower-camera systems are used extensively in smoke detection to spot fires before they spiral out of control. However, high false-positive rates make many alert systems unusable. 
 
 We systematically augmented a YOLO11-S baseline with DCT (Discrete Cosine Transform) and skip connection gating to solve this. We trained and tested on a unified 56k image dataset. Several other attention mechanisms were experimented upon with different placement studies, some of which are novel in this domain.
 
-## 🏗️ Architecture: DCT + AG Skips
+## Architecture: DCT + AG Skips
 Our best-performing model modifies YOLO11-S by targeting both channel and spatial features:
 * **DCT (Frequency-Domain Attention):** Placed at Layer 10 (post-SPPF bottleneck) to distinguish the mid-frequency texture of smoke from low-frequency haze.
 * **Attention Gates (AG):** Inserted at Layers 13 and 17 on the P4 and P3 FPN skip connections. This stops irrelevant background spatial noise from bleeding into the detection neck.
 
-## 🔬 What We Tried (Ablation & Experiments)
+## What We Tried (Ablation & Experiments)
 We did not just build one model. We ran a systematic ablation study to see what actually works for surveillance smoke detection. Here is a brief breakdown of our experimental process:
 
 1. **Trained the Baseline:** We started by training a vanilla YOLO11-S model on our unified dataset to establish a performance floor.
@@ -20,10 +20,10 @@ We did not just build one model. We ran a systematic ablation study to see what 
 5. **Single-Class Training:** We tested a smoke-only hypothesis. It turned out that keeping the "fire" class during training actually improves smoke detection recall due to better boundary supervision.
 6. **Hard Negative Mining (HNM):** Finally, we took our best architecture and finetuned it on explicitly mined hard negatives. This slashed our false-positive rate by 47.4% on a blind cross-dataset test set while only costing 1.09 percentage points of recall.
 
-## 🚀 Results
+## Results
 Our final finetuned **DCT + AG Skips** model achieves exceptional cross-geography generalization. On our blind test set featuring unseen cameras from California, Oregon, and Chile, the model maintained a **72.29% recall** with a highly operational **13.51% False Positive Rate**. 
 
-## 📚 References
+## References
 * Jocher, G., & Qiu, J. (2024). Ultralytics YOLO11.
 * Woo, S., et al. (2018). CBAM: Convolutional Block Attention Module. *ECCV*.
 * Qin, Z., et al. (2021). FcaNet: Frequency Channel Attention Networks. *ICCV*.
