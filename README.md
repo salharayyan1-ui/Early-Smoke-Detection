@@ -23,6 +23,14 @@ We did not just build one model. We ran a systematic ablation study to see what 
 ## Results
 Our final finetuned **DCT + AG Skips** model achieves exceptional cross-geography generalization. On our blind test set featuring unseen cameras from California, Oregon, and Chile, the model maintained a **72.29% recall** with a highly operational **13.51% False Positive Rate**. 
 
+## Repository Structure
+
+Here is a quick breakdown of how the files in this repository are organized:
+
+```text
+├── notebooks/   # Jupyter notebooks containing the executed code, experiments, and cell outputs
+└── results/     # Exported metrics, including CSVs, Excel spreadsheets, and data tables
+
 ## References
 * Jocher, G., & Qiu, J. (2024). Ultralytics YOLO11.
 * Woo, S., et al. (2018). CBAM: Convolutional Block Attention Module. *ECCV*.
